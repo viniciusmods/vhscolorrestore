@@ -8,13 +8,13 @@ Using VLC Media Player, you can choose *Video > Take Snapshot* from the main men
 ## Step 2: adjust colors with GIMP Color Curves and export curves to file
 Choose *Colors > Curves* from the main menu in GIMP, change the curves until you are happy (you can save them using the + button), and export as *gimp-curve.txt*, as follows:
 
-![export GIMP color curves](https://github.com/bjaan/[reponame]/blob/curve2ffmpeg/image.jpg?raw=true)
+![export GIMP color curves](https://raw.githubusercontent.com/bjaan/deinterlace-colorcorrect-analog-video/master/exportgimpcurve.png)
 
 Example file: *vhs-gimp-curves.txt*
 
 ## Step 3: curve2ffmpeg - convert GIMP color curves to FFMPEG color curves
 
-Convert a GIMP curve into FFMPEG curve code
+Convert a GIMP curve into FFMPEG curve code using a Python script.
 
 Orginal author is **NapoleonWils0n**, their project is over here https://github.com/NapoleonWils0n/curve2ffmpeg, who also uploaded the following [YouTube Video](https://youtu.be/s4xL0msZYuY) on how to do this process.
 
@@ -28,7 +28,7 @@ python curve2ffmpeg.py -i gimp-curve.txt
 
 This save the converted FFMPEG curves as `gimp-curve-ffmpeg.txt`.
 
-Example file: *vhs-gimp-curves-ffmpeg.txt*
+Example file: *vhs-gimp-curves-ffmpeg.txt*.  `-ffmpeg` is added.
 
 ## Step 4: reduce resolution to typical orginal video resolution, run de-interlace, color correction, re-encoding through FFMPEG
 
@@ -39,15 +39,17 @@ Create a new file with the `.filters` file name extension:
 
 Start with:
 ```
-scale=640x480
+ scale=480x320
 ,setsar=1:1
 ,yadif
-,crop=622:480:0:0
+,crop=466:320:0:0
 ,
 ```
 and put contents of the FFMPEG curve file, created in the previous step and which starts with `curves=master=`, after it.
 
-The example line `,crop=622:480:0:0` can be left off when you don't need to additionally crop the video.  Parameters are `width:height:leftX:topY`.
+The example line `,crop=466:320:0:0` can be left off when you don't need to additionally crop the video.  Parameters are `width:height:leftX:topY`.
+
+Check typical resolutions here https://gist.github.com/jonlabelle/7834592
 
 Example file: *vhs.filters*
 
