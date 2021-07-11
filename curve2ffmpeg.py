@@ -22,17 +22,10 @@ curve2ffmpeg -i <gimpe curve>
 def checkfile(infile):
     ''' check first argument passed to script
     
-    check if first argument passed to script, 
-    is a text file and if so open it and read the contents,
-    and set the variable infile to equal the contents of the text file.
-    then check if the string is a url
+    check if first argument passed to script, is a file 
     '''
     if os.path.isfile(infile):
-        if mimetypes.guess_type(infile)[0] == 'text/plain':
-            with open(infile, 'r') as file:
-                infile = file.read()
-            file.close()          
-            return infile
+        return infile
     
 # argv
 argv = sys.argv[1:]
@@ -46,7 +39,6 @@ def main(argv):
     
     check number of arguments passed to script
     '''
-
     if len(argv) == 0: # no arguments passed to script
         print("No arguments passed to script")
         usage()    # display script usage
@@ -84,9 +76,11 @@ def main(argv):
 def entry():
     main(sys.argv[1:])
 
-    # infile 
-    infile = result[0]
-
+    # infile: set the variable infile to equal the contents of the file
+    with open(result[0], 'r') as file:
+        infile = file.read()
+        file.close()          
+    
     #make generator
     lower=0
     upper=1
@@ -104,12 +98,9 @@ def entry():
     
     # outfile destination
     name=(Path(argv[1]).resolve().stem)
-    #home = os.path.expanduser('~')
-    #desktop = 'Desktop'
-    time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     ext = 'txt'
     #outfile = os.path.join(home, desktop, '{}-{}.{}'.format(name, time, ext))
-    outfile = '{}-{}.{}'.format(name, time, ext)
+    outfile = os.path.join(os.path.dirname(os.path.realpath(__file__)), '{}-{}.{}'.format(name, 'ffmpeg', ext))
     
     # regex to find code in gimp curve
     foundValues = re.findall(r'(?<=samples 256) [\d. ]*',infile)
@@ -126,7 +117,7 @@ def entry():
     
     # command
     command = commandPrelim + ' '.join(masterValues) + '\':red=\'' + ' '.join(redValues) +'\':green=\'' + ' '.join(greenValues) + '\':blue=\'' + ' '.join(blueValues) + '\''
-
+    
     # save file
     try:
         with open(outfile, 'w') as out:
@@ -135,3 +126,6 @@ def entry():
         print("stopped by user")
     except IOError:
         print("input outpur error")
+
+if __name__ == "__main__":
+    entry()
