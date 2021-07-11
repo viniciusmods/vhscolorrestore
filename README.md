@@ -12,11 +12,13 @@ Choose *Colors > Curves* from the main menu in GIMP, change the curves until you
 
 Example file: *vhs-gimp-curves.txt*
 
-## Step 3: curve2ffmpeg - convert GIMP color curves to FFMPEG color covers
+## Step 3: curve2ffmpeg - convert GIMP color curves to FFMPEG color curves
 
-convert a gimp curve into ffmpeg filter code
+Convert a GIMP curve into FFMPEG curve code
 
-Orginal author is **NapoleonWils0n**, their project is over here https://github.com/NapoleonWils0n/curve2ffmpeg who also uploaded the following [YouTube Video](https://youtu.be/s4xL0msZYuY) on how to do this process, slightly different
+Orginal author is **NapoleonWils0n**, their project is over here https://github.com/NapoleonWils0n/curve2ffmpeg, who also uploaded the following [YouTube Video](https://youtu.be/s4xL0msZYuY) on how to do this process.
+
+This script was slightly modified to allow it to write the output file to the same folder and directly as a Python script, without the need of an installation.
 
 usage:
 
@@ -24,9 +26,11 @@ usage:
 python curve2ffmpeg.py -i gimp-curve.txt
 ```
 
+This save the converted FFMPEG curves as `gimp-curve-ffmpeg.txt`.
+
 Example file: *vhs-gimp-curves-ffmpeg.txt*
 
-## Step 4: reduce resolution to typical orginal resolution, run de-interlace, color correction, re-encoding through FFMPEG
+## Step 4: reduce resolution to typical orginal video resolution, run de-interlace, color correction, re-encoding through FFMPEG
 
 ### Step 4.1 video filtering parameters for FFMPEG
 As the video-filtering parameters tend to get long, these are stored in a separate file.
@@ -43,7 +47,7 @@ scale=640x480
 ```
 and put contents of the FFMPEG curve file, created in the previous step and which starts with `curves=master=`, after it.
 
-The example line `,crop=622:480:0:0` can be left off when you don't need to additionally crop the video.  Parameters are `width:height:top_x:top_y`.
+The example line `,crop=622:480:0:0` can be left off when you don't need to additionally crop the video.  Parameters are `width:height:leftX:topY`.
 
 Example file: *vhs.filters*
 
