@@ -2,7 +2,9 @@
 
 ## Step 1: take a couple of screenshots from the video
 At this point the video is already digitized.
-Take a handful of video screenshots
+
+Take a handful of video screenshots, which can be used to test if your color correction works in different scenes.
+
 Using VLC Media Player, you can choose *Video > Take Snapshot* from the main menu.  Images are saved in your home folder's Picture folder.
 
 ## Step 2: adjust colors with GIMP Color Curves and export curves to file
