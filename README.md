@@ -28,9 +28,9 @@ usage:
 python curve2ffmpeg.py -i gimp-curve.txt
 ```
 
-This save the converted FFMPEG curves as `gimp-curve-ffmpeg.txt`.
+This saves the converted FFMPEG curves as `gimp-curve-ffmpeg.txt`.  `-ffmpeg` is added.
 
-Example file: *vhs-gimp-curves-ffmpeg.txt*.  `-ffmpeg` is added.
+Example file: *vhs-gimp-curves-ffmpeg.txt*.
 
 ## Step 4: reduce resolution to typical orginal video resolution, run de-interlace, color correction, re-encoding through FFMPEG
 
@@ -49,9 +49,10 @@ Start with:
 ```
 and put contents of the FFMPEG curve file, created in the previous step and which starts with `curves=master=`, after it.
 
-The example line `,crop=466:320:0:0` can be left off when you don't need to additionally crop the video.  Parameters are `width:height:leftX:topY`.
+The example line ` scale=480x320` needs to be adjested to the resolution of source video. `scale`-filter parameters are `widthxheight`.
+The example line `,crop=466:320:0:0` can be left off when you don't need to additionally crop the video.  `crop`-filter parameters are `width:height:leftX:topY`.
 
-Check typical resolutions here https://gist.github.com/jonlabelle/7834592
+Check typical resolutions here https://gist.github.com/jonlabelle/7834592#file-television_resolution_standards-md
 
 Example file: *vhs.filters*
 
@@ -66,4 +67,4 @@ Example parameters:
 * `vhs.filters` - video-filtering parameters file, created in *step 4.1*
 * `analog_video_file_output.mp4` - output video file - preferable `.mp4` or `.mkv`
 
-`-pix_fmt yuv420p` is needed as the color correction algorithm changes the pixel format.
+`-pix_fmt yuv420p` is needed as the color correction algorithm changes the pixel format to 4:4:4, which the `libx264` codec doesn't like.
