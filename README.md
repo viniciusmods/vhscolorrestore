@@ -57,7 +57,15 @@ Check typical resolutions here https://gist.github.com/jonlabelle/7834592#file-t
 
 Example file: *vhs.filters*
 
-## Step 4.2 run FFMPEG
+For NTSC LaserDisk or NTSC VHS footage that has been captured previously at a higher resolution and/or framerate than the orignal video information, you can restore the original interlaced fields by resizing it back to original resolution forcing it back it back to 25fps.  The damage might already have been done. This worked for me once. In this case, start with:
+```
+ scale=666:480
+,yadif=1:-1:0
+,minterpolate=fps=25:mi_mode=blend
+,
+```
+
+### Step 4.2 run FFMPEG
 
 Run the following command to start the conversion:
 
