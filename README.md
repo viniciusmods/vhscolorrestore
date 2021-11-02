@@ -49,7 +49,7 @@ Start with:
 ```
 and put contents of the FFMPEG curve file, created in the previous step and which starts with `curves=master=`, after it.
 
-The example line ` scale=480x320` needs to be adjested to the resolution of source video. `scale`-filter parameters are `widthxheight`.
+The example line ` scale=480x320` needs to be adjusted to the resolution of source video. `scale`-filter parameters are `widthxheight`.
 
 The example line `,crop=466:320:0:0` can be left off when you don't need to additionally crop the video.  `crop`-filter parameters are `width:height:leftX:topY`.
 
